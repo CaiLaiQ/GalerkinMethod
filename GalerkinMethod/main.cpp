@@ -47,39 +47,6 @@ double sum(const function<double(double)> &f, double *nodes, int dim) {
     return sum;
 }
 
-/*метод Гаусса-Зейделя*/
-// Условие окончания
-bool converge(double *xk, double *xkp, int n, double eps)
-{
-    double norm = 0;
-    for (int i = 0; i < n; i++)
-    {
-        norm += (xk[i] - xkp[i])*(xk[i] - xkp[i]);
-    }
-    if(sqrt(norm) >= eps)
-        return false;
-    return true;
-}
-void calculateSolution(double *a, double *x, double *b, int n, double eps) {
-    double *p = new double[n];
-    do
-    {
-        for (int i = 0; i < n; i++)
-            p[i] = x[i];
-        
-        for (int i = 0; i < n; i++)
-        {
-            double var = 0;
-            for (int j = 0; j < i; j++)
-                var += (a[i*n+j] * x[j]);
-            for (int j = i + 1; j < n; j++)
-                var += (a[i*n+j] * p[j]);
-            x[i] = (b[i] - var) / a[i*n+i];
-        }
-    }
-    while (!converge(x, p, n, eps));
-}
-/**/
 
 int main() {
     int i,n;
@@ -92,7 +59,7 @@ int main() {
     int M = (beta-alpha)/h+1;
     double *x = new double[M];
     for (int i = 0; i < M; i++) {
-        x[i] = (beta-alpha)/2.0*cos(M_PI*(2.0*i - 1)/(2.0 * M)) + (beta + alpha)/2.0;
+        x[i] = (beta-alpha)/2.0*cos(M_PI*(2.0*i + 1)/(2.0 * M)) + (beta + alpha)/2.0;
     }
     /*конец*/
     
